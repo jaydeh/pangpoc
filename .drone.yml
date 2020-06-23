@@ -2,10 +2,10 @@ pipeline:
   clean:
     image: mcr.microsoft.com/dotnet/core/sdk:3.1
     commands:
-      - dotnet clean
+      - dotnet clean pangpoc/WebApplication1/WebApplication1/WebApplication1.csproj
    
   build:
     image: mcr.microsoft.com/dotnet/core/sdk:3.1.102
     commands:
-      - dotnet build BDD.Test.Automation.V2.sln
+      - dotnet build pangpoc/WebApplication1/WebApplication1/WebApplication1.csproj
    
