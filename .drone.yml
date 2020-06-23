@@ -1,0 +1,11 @@
+pipeline:
+  clean:
+    image: mcr.microsoft.com/dotnet/core/sdk:3.1
+    commands:
+      - dotnet clean
+   
+  build:
+    image: mcr.microsoft.com/dotnet/core/sdk:3.1.102
+    commands:
+      - dotnet build BDD.Test.Automation.V2.sln
+   
