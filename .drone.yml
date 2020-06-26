@@ -17,7 +17,8 @@ pipeline:
       - apt-get install jq -y
       - touch temp.json
       - cp /drone/src/github.com/jaydeh/pangpoc/pangpoc/WebApplication1/WebApplication1/appsettings.json temp.json
-      - jq '.AzureAd.TenantId = "test1" | .AzureAd.ClientId = "test2" | .ConnectionStrings.Test = "test3"' temp.json /drone/src/github.com/jaydeh/pangpoc/pangpoc/WebApplication1/WebApplication1/appsettings.json
+      #- jq '.AzureAd.TenantId = "test1" | .AzureAd.ClientId = "test2" | .ConnectionStrings.Test = "test3"' temp.json /drone/src/github.com/jaydeh/pangpoc/pangpoc/WebApplication1/WebApplication1/appsettings.json
+      - jq '.AzureAd.TenantId = "test1"' temp.json /drone/src/github.com/jaydeh/pangpoc/pangpoc/WebApplication1/WebApplication1/appsettings.json
       - rm temp.json
   
   check:
