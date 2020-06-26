@@ -10,7 +10,7 @@ pipeline:
       - dotnet build pangpoc/WebApplication1/WebApplication1/WebApplication1.csproj
    
   publish:
-    image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    image: mcr.microsoft.com/dotnet/core/sdk:3.1
     commands:
     - apt-get update -y
     - apt-get upgrade -y
