@@ -30,6 +30,7 @@ pipeline:
       #app_web_name: app_web_name
       #app_web_rg: app_web_rg
     commands:
+    - echo $client_id
     - az login --service-principal -u $client_id -p $client_password -t $client_tenant
     - az webapp deployment source config-zip --src /drone/src/output_file.zip -n $app_web_name -g $app_web_rg
     secrets: [ client_id, client_password, client_tenant, app_web_name, app_web_rg ]
