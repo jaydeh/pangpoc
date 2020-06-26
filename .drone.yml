@@ -8,7 +8,23 @@ pipeline:
     image: mcr.microsoft.com/dotnet/core/sdk:3.1.102
     commands:
       - dotnet build pangpoc/WebApplication1/WebApplication1/WebApplication1.csproj
-   
+  
+  edit:
+    image: mcr.microsoft.com/dotnet/core/sdk:3.1
+    commands:
+      - apt-get update -y
+      - apt-get upgrade -y
+      - apt-get install jq -y
+      - touch temp.json
+      - cp /drone/src/pangpoc/WebApplication1/WebApplication1/appsettings.json temp.json
+      - jq --arg id $id --arg conn_string "$conn_string" --arg tenant $tenant '.AzureAd.TenantId = $tenant | .AzureAd.ClientId = $id | .ConnectionStrings.SPRATEntity = $conn_string' temp.json /drone/src/pangpoc/WebApplication1/WebApplication1/appsettings.json
+      - rm temp.json
+  
+  check:
+      image: mcr.microsoft.com/dotnet/core/sdk:3.1
+      commands:
+        - cat /drone/src/pangpoc/WebApplication1/WebApplication1/appsettings.json
+  
   publish:
     image: mcr.microsoft.com/dotnet/core/sdk:3.1
     commands:
