@@ -9,32 +9,33 @@ pipeline:
     commands:
       - dotnet build pangpoc/WebApplication1/WebApplication1/WebApplication1.csproj
    
- publish:
-  image: mcr.microsoft.com/dotnet/core/sdk:2.2
-  commands:
-  - apt-get update -y
-  - apt-get upgrade -y
-  - apt-get install zip unzip -y
-  - dotnet publish --configuration Release pangpoc/WebApplication1/WebApplication1.sln --output /drone/src/web/
+  publish:
+    image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    commands:
+    - apt-get update -y
+    - apt-get upgrade -y
+    - apt-get install zip unzip -y
+    - dotnet publish --configuration Release pangpoc/WebApplication1/WebApplication1.sln --output /drone/src/web/
   #- cp -r /drone/src/Impress.UI/bin/Release/netcoreapp2.2/ /drone/src/web/
   #- cp -r /drone/src/Impress.Core/bin/Release/netcoreapp2.2/ /drone/src/web/
-  - cd /drone/src/web
-  - zip -r output_file.zip *
-  - cp -r output_file.zip /drone/src
+    - cd /drone/src/web
+    - zip -r output_file.zip *
+    - cp -r output_file.zip /drone/src
   
- deploy:
-  image: mcr.microsoft.com/azure-cli
-  environment:
-    id:
-      from_secret: client_id
-    pass:
-      from_secret: client_password
-    tenant:
-      from_secret: client_tenant
-    app_web_name:
-      from_secret: app_web_name
-    app_web_rg:
-      from_secret: app_web_rg
-  commands:
-  - az login --service-principal -u $id -p $pass --tenant $tenant
-  - az webapp deployment source config-zip --src /drone/src/output_file.zip -n $app_web_name -g $app_web_rg
+  deploy:
+    image: mcr.microsoft.com/azure-cli
+    environment:
+      id:
+        from_secret: client_id
+      pass:
+        from_secret: client_password
+      tenant:
+        from_secret: client_tenant
+      app_web_name:
+        from_secret: app_web_name
+      app_web_rg:
+        from_secret: app_web_rg
+    commands:
+    - az login --service-principal -u $id -p $pass --tenant $tenant
+    - az webapp deployment source config-zip --src /drone/src/output_file.zip -n $app_web_name -g $app_web_rg
+  
