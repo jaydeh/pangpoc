@@ -22,7 +22,7 @@ pipeline:
   - zip -r output_file.zip *
   - cp -r output_file.zip /drone/src
   
-  deploy:
+ deploy:
   image: mcr.microsoft.com/azure-cli
   environment:
    id:
