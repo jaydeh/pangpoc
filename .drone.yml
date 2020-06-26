@@ -24,7 +24,6 @@ pipeline:
   
   deploy:
     image: mcr.microsoft.com/azure-cli
-    secrets: [ client_id, client_password, client_tenant, app_web_name, app_web_rg]
       #id: client_id
       #pass: client_password
       #tenant: client_tenant
@@ -33,4 +32,4 @@ pipeline:
     commands:
     - az login --service-principal -u $client_id -p $client_password -t $client_tenant
     - az webapp deployment source config-zip --src /drone/src/output_file.zip -n $app_web_name -g $app_web_rg
-  
+    secrets: [ client_id, client_password, client_tenant, app_web_name, app_web_rg ]
