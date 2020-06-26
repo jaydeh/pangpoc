@@ -25,16 +25,11 @@ pipeline:
   deploy:
     image: mcr.microsoft.com/azure-cli
     environment:
-      id:
-        from_secret: client_id
-      pass:
-        from_secret: client_password
-      tenant:
-        from_secret: client_tenant
-      app_web_name:
-        from_secret: app_web_name
-      app_web_rg:
-        from_secret: app_web_rg
+      id: from_secret: client_id
+      pass: from_secret: client_password
+      tenant: from_secret: client_tenant
+      app_web_name: from_secret: app_web_name
+      app_web_rg: from_secret: app_web_rg
     commands:
     - az login --service-principal -u $id -p $pass --tenant $tenant
     - az webapp deployment source config-zip --src /drone/src/output_file.zip -n $app_web_name -g $app_web_rg
